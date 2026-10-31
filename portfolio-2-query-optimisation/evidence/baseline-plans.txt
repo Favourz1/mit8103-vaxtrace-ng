@@ -1,0 +1,395 @@
+RUN 1
+Pager usage is off.
+SET
+ postgres_version | movement_rows | balance_rows 
+------------------+---------------+--------------
+ 18.6             |        203000 |         3000
+(1 row)
+
+PLAN A: latest movements for LOT-000777
+                                                                           QUERY PLAN                                                                            
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5597.34..5597.34 rows=1 width=37) (actual time=155.203..179.743 rows=50.00 loops=1)
+   Buffers: shared hit=3493
+   ->  Sort  (cost=5597.34..5597.34 rows=1 width=37) (actual time=155.200..179.736 rows=50.00 loops=1)
+         Sort Key: m.occurred_at DESC, m.movement_id DESC
+         Sort Method: top-N heapsort  Memory: 32kB
+         Buffers: shared hit=3493
+         ->  Nested Loop  (cost=1022.66..5597.33 rows=1 width=37) (actual time=1.975..179.382 rows=201.00 loops=1)
+               Join Filter: (l.product_id = p.product_id)
+               Buffers: shared hit=3487
+               ->  Index Scan using product_sku_key on product p  (cost=0.15..8.17 rows=1 width=8) (actual time=0.036..0.041 rows=1.00 loops=1)
+                     Index Cond: (sku = 'VX-017'::text)
+                     Index Searches: 1
+                     Buffers: shared hit=2
+               ->  Gather  (cost=1022.51..5586.62 rows=203 width=45) (actual time=1.933..179.207 rows=201.00 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=3485
+                     ->  Hash Join  (cost=22.51..4566.32 rows=85 width=45) (actual time=0.497..40.661 rows=67.00 loops=3)
+                           Hash Cond: (m.lot_id = l.lot_id)
+                           Buffers: shared hit=3485
+                           ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=45) (actual time=0.007..17.634 rows=67666.67 loops=3)
+                                 Buffers: shared hit=3475
+                           ->  Hash  (cost=22.50..22.50 rows=1 width=16) (actual time=0.418..0.419 rows=1.00 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=10
+                                 ->  Seq Scan on lot l  (cost=0.00..22.50 rows=1 width=16) (actual time=0.322..0.403 rows=1.00 loops=1)
+                                       Filter: (lot_code = 'LOT-000777'::text)
+                                       Rows Removed by Filter: 999
+                                       Buffers: shared hit=10
+ Planning:
+   Buffers: shared hit=185
+ Planning Time: 9.675 ms
+ Execution Time: 179.889 ms
+(33 rows)
+
+PLAN B: latest movements for CLINIC07
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5557.56..5563.38 rows=50 width=41) (actual time=156.754..165.000 rows=50.00 loops=1)
+   Buffers: shared hit=3507
+   ->  Gather Merge  (cost=5557.56..5596.35 rows=333 width=41) (actual time=156.753..164.990 rows=50.00 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3507
+         ->  Sort  (cost=4557.54..4557.89 rows=139 width=41) (actual time=35.767..35.772 rows=16.67 loops=3)
+               Sort Key: m.occurred_at DESC, m.movement_id DESC
+               Sort Method: top-N heapsort  Memory: 32kB
+               Buffers: shared hit=3507
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Hash Join  (cost=8.18..4552.59 rows=139 width=41) (actual time=0.031..30.549 rows=3767.00 loops=3)
+                     Hash Cond: (m.facility_id = f.facility_id)
+                     Buffers: shared hit=3477
+                     ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=49) (actual time=0.007..10.574 rows=67666.67 loops=3)
+                           Buffers: shared hit=3475
+                     ->  Hash  (cost=8.17..8.17 rows=1 width=8) (actual time=0.047..0.049 rows=1.00 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                           Buffers: shared hit=2
+                           ->  Index Scan using facility_code_key on facility f  (cost=0.15..8.17 rows=1 width=8) (actual time=0.040..0.041 rows=1.00 loops=1)
+                                 Index Cond: (code = 'CLINIC07'::text)
+                                 Index Searches: 1
+                                 Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=43
+ Planning Time: 4.048 ms
+ Execution Time: 165.061 ms
+(28 rows)
+
+RUN 2
+Pager usage is off.
+SET
+ postgres_version | movement_rows | balance_rows 
+------------------+---------------+--------------
+ 18.6             |        203000 |         3000
+(1 row)
+
+PLAN A: latest movements for LOT-000777
+                                                                           QUERY PLAN                                                                            
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5597.34..5597.34 rows=1 width=37) (actual time=177.684..186.545 rows=50.00 loops=1)
+   Buffers: shared hit=3493
+   ->  Sort  (cost=5597.34..5597.34 rows=1 width=37) (actual time=177.679..186.532 rows=50.00 loops=1)
+         Sort Key: m.occurred_at DESC, m.movement_id DESC
+         Sort Method: top-N heapsort  Memory: 32kB
+         Buffers: shared hit=3493
+         ->  Nested Loop  (cost=1022.66..5597.33 rows=1 width=37) (actual time=1.872..186.155 rows=201.00 loops=1)
+               Join Filter: (l.product_id = p.product_id)
+               Buffers: shared hit=3487
+               ->  Index Scan using product_sku_key on product p  (cost=0.15..8.17 rows=1 width=8) (actual time=0.043..0.051 rows=1.00 loops=1)
+                     Index Cond: (sku = 'VX-017'::text)
+                     Index Searches: 1
+                     Buffers: shared hit=2
+               ->  Gather  (cost=1022.51..5586.62 rows=203 width=45) (actual time=1.825..185.981 rows=201.00 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=3485
+                     ->  Hash Join  (cost=22.51..4566.32 rows=85 width=45) (actual time=0.415..48.001 rows=67.00 loops=3)
+                           Hash Cond: (m.lot_id = l.lot_id)
+                           Buffers: shared hit=3485
+                           ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=45) (actual time=0.008..13.660 rows=67666.67 loops=3)
+                                 Buffers: shared hit=3475
+                           ->  Hash  (cost=22.50..22.50 rows=1 width=16) (actual time=0.375..0.376 rows=1.00 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=10
+                                 ->  Seq Scan on lot l  (cost=0.00..22.50 rows=1 width=16) (actual time=0.273..0.354 rows=1.00 loops=1)
+                                       Filter: (lot_code = 'LOT-000777'::text)
+                                       Rows Removed by Filter: 999
+                                       Buffers: shared hit=10
+ Planning:
+   Buffers: shared hit=185
+ Planning Time: 10.881 ms
+ Execution Time: 186.677 ms
+(33 rows)
+
+PLAN B: latest movements for CLINIC07
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5557.56..5563.38 rows=50 width=41) (actual time=153.135..168.984 rows=50.00 loops=1)
+   Buffers: shared hit=3507
+   ->  Gather Merge  (cost=5557.56..5596.35 rows=333 width=41) (actual time=153.133..168.974 rows=50.00 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3507
+         ->  Sort  (cost=4557.54..4557.89 rows=139 width=41) (actual time=39.396..39.401 rows=16.67 loops=3)
+               Sort Key: m.occurred_at DESC, m.movement_id DESC
+               Sort Method: top-N heapsort  Memory: 32kB
+               Buffers: shared hit=3507
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Hash Join  (cost=8.18..4552.59 rows=139 width=41) (actual time=0.038..34.628 rows=3767.00 loops=3)
+                     Hash Cond: (m.facility_id = f.facility_id)
+                     Buffers: shared hit=3477
+                     ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=49) (actual time=0.007..11.232 rows=67666.67 loops=3)
+                           Buffers: shared hit=3475
+                     ->  Hash  (cost=8.17..8.17 rows=1 width=8) (actual time=0.072..0.075 rows=1.00 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                           Buffers: shared hit=2
+                           ->  Index Scan using facility_code_key on facility f  (cost=0.15..8.17 rows=1 width=8) (actual time=0.063..0.065 rows=1.00 loops=1)
+                                 Index Cond: (code = 'CLINIC07'::text)
+                                 Index Searches: 1
+                                 Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=43
+ Planning Time: 4.350 ms
+ Execution Time: 169.059 ms
+(28 rows)
+
+RUN 3
+Pager usage is off.
+SET
+ postgres_version | movement_rows | balance_rows 
+------------------+---------------+--------------
+ 18.6             |        203000 |         3000
+(1 row)
+
+PLAN A: latest movements for LOT-000777
+                                                                           QUERY PLAN                                                                            
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5597.34..5597.34 rows=1 width=37) (actual time=194.509..221.280 rows=50.00 loops=1)
+   Buffers: shared hit=3493
+   ->  Sort  (cost=5597.34..5597.34 rows=1 width=37) (actual time=194.505..221.260 rows=50.00 loops=1)
+         Sort Key: m.occurred_at DESC, m.movement_id DESC
+         Sort Method: top-N heapsort  Memory: 32kB
+         Buffers: shared hit=3493
+         ->  Nested Loop  (cost=1022.66..5597.33 rows=1 width=37) (actual time=2.238..220.813 rows=201.00 loops=1)
+               Join Filter: (l.product_id = p.product_id)
+               Buffers: shared hit=3487
+               ->  Index Scan using product_sku_key on product p  (cost=0.15..8.17 rows=1 width=8) (actual time=0.041..0.044 rows=1.00 loops=1)
+                     Index Cond: (sku = 'VX-017'::text)
+                     Index Searches: 1
+                     Buffers: shared hit=2
+               ->  Gather  (cost=1022.51..5586.62 rows=203 width=45) (actual time=2.191..220.604 rows=201.00 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=3485
+                     ->  Hash Join  (cost=22.51..4566.32 rows=85 width=45) (actual time=0.542..51.281 rows=67.00 loops=3)
+                           Hash Cond: (m.lot_id = l.lot_id)
+                           Buffers: shared hit=3485
+                           ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=45) (actual time=0.006..25.578 rows=67666.67 loops=3)
+                                 Buffers: shared hit=3475
+                           ->  Hash  (cost=22.50..22.50 rows=1 width=16) (actual time=0.486..0.487 rows=1.00 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=10
+                                 ->  Seq Scan on lot l  (cost=0.00..22.50 rows=1 width=16) (actual time=0.351..0.468 rows=1.00 loops=1)
+                                       Filter: (lot_code = 'LOT-000777'::text)
+                                       Rows Removed by Filter: 999
+                                       Buffers: shared hit=10
+ Planning:
+   Buffers: shared hit=185
+ Planning Time: 8.356 ms
+ Execution Time: 221.456 ms
+(33 rows)
+
+PLAN B: latest movements for CLINIC07
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5557.56..5563.38 rows=50 width=41) (actual time=169.215..181.895 rows=50.00 loops=1)
+   Buffers: shared hit=3507
+   ->  Gather Merge  (cost=5557.56..5596.35 rows=333 width=41) (actual time=169.213..181.888 rows=50.00 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3507
+         ->  Sort  (cost=4557.54..4557.89 rows=139 width=41) (actual time=40.510..40.513 rows=16.67 loops=3)
+               Sort Key: m.occurred_at DESC, m.movement_id DESC
+               Sort Method: top-N heapsort  Memory: 32kB
+               Buffers: shared hit=3507
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Hash Join  (cost=8.18..4552.59 rows=139 width=41) (actual time=0.030..36.781 rows=3767.00 loops=3)
+                     Hash Cond: (m.facility_id = f.facility_id)
+                     Buffers: shared hit=3477
+                     ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=49) (actual time=0.006..10.060 rows=67666.67 loops=3)
+                           Buffers: shared hit=3475
+                     ->  Hash  (cost=8.17..8.17 rows=1 width=8) (actual time=0.048..0.049 rows=1.00 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                           Buffers: shared hit=2
+                           ->  Index Scan using facility_code_key on facility f  (cost=0.15..8.17 rows=1 width=8) (actual time=0.041..0.042 rows=1.00 loops=1)
+                                 Index Cond: (code = 'CLINIC07'::text)
+                                 Index Searches: 1
+                                 Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=43
+ Planning Time: 4.570 ms
+ Execution Time: 181.999 ms
+(28 rows)
+
+RUN 4
+Pager usage is off.
+SET
+ postgres_version | movement_rows | balance_rows 
+------------------+---------------+--------------
+ 18.6             |        203000 |         3000
+(1 row)
+
+PLAN A: latest movements for LOT-000777
+                                                                           QUERY PLAN                                                                            
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5597.34..5597.34 rows=1 width=37) (actual time=152.724..175.517 rows=50.00 loops=1)
+   Buffers: shared hit=3493
+   ->  Sort  (cost=5597.34..5597.34 rows=1 width=37) (actual time=152.716..175.505 rows=50.00 loops=1)
+         Sort Key: m.occurred_at DESC, m.movement_id DESC
+         Sort Method: top-N heapsort  Memory: 32kB
+         Buffers: shared hit=3493
+         ->  Nested Loop  (cost=1022.66..5597.33 rows=1 width=37) (actual time=2.236..174.973 rows=201.00 loops=1)
+               Join Filter: (l.product_id = p.product_id)
+               Buffers: shared hit=3487
+               ->  Index Scan using product_sku_key on product p  (cost=0.15..8.17 rows=1 width=8) (actual time=0.042..0.049 rows=1.00 loops=1)
+                     Index Cond: (sku = 'VX-017'::text)
+                     Index Searches: 1
+                     Buffers: shared hit=2
+               ->  Gather  (cost=1022.51..5586.62 rows=203 width=45) (actual time=2.188..174.785 rows=201.00 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=3485
+                     ->  Hash Join  (cost=22.51..4566.32 rows=85 width=45) (actual time=0.546..43.978 rows=67.00 loops=3)
+                           Hash Cond: (m.lot_id = l.lot_id)
+                           Buffers: shared hit=3485
+                           ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=45) (actual time=0.016..16.304 rows=67666.67 loops=3)
+                                 Buffers: shared hit=3475
+                           ->  Hash  (cost=22.50..22.50 rows=1 width=16) (actual time=0.474..0.474 rows=1.00 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=10
+                                 ->  Seq Scan on lot l  (cost=0.00..22.50 rows=1 width=16) (actual time=0.362..0.437 rows=1.00 loops=1)
+                                       Filter: (lot_code = 'LOT-000777'::text)
+                                       Rows Removed by Filter: 999
+                                       Buffers: shared hit=10
+ Planning:
+   Buffers: shared hit=185
+ Planning Time: 7.955 ms
+ Execution Time: 175.666 ms
+(33 rows)
+
+PLAN B: latest movements for CLINIC07
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5557.56..5563.38 rows=50 width=41) (actual time=188.636..214.392 rows=50.00 loops=1)
+   Buffers: shared hit=3507
+   ->  Gather Merge  (cost=5557.56..5596.35 rows=333 width=41) (actual time=188.634..214.381 rows=50.00 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3507
+         ->  Sort  (cost=4557.54..4557.89 rows=139 width=41) (actual time=36.828..36.833 rows=16.67 loops=3)
+               Sort Key: m.occurred_at DESC, m.movement_id DESC
+               Sort Method: top-N heapsort  Memory: 32kB
+               Buffers: shared hit=3507
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Hash Join  (cost=8.18..4552.59 rows=139 width=41) (actual time=0.035..32.895 rows=3767.00 loops=3)
+                     Hash Cond: (m.facility_id = f.facility_id)
+                     Buffers: shared hit=3477
+                     ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=49) (actual time=0.005..9.418 rows=67666.67 loops=3)
+                           Buffers: shared hit=3475
+                     ->  Hash  (cost=8.17..8.17 rows=1 width=8) (actual time=0.058..0.059 rows=1.00 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                           Buffers: shared hit=2
+                           ->  Index Scan using facility_code_key on facility f  (cost=0.15..8.17 rows=1 width=8) (actual time=0.043..0.045 rows=1.00 loops=1)
+                                 Index Cond: (code = 'CLINIC07'::text)
+                                 Index Searches: 1
+                                 Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=43
+ Planning Time: 4.271 ms
+ Execution Time: 214.467 ms
+(28 rows)
+
+RUN 5
+Pager usage is off.
+SET
+ postgres_version | movement_rows | balance_rows 
+------------------+---------------+--------------
+ 18.6             |        203000 |         3000
+(1 row)
+
+PLAN A: latest movements for LOT-000777
+                                                                           QUERY PLAN                                                                            
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5597.34..5597.34 rows=1 width=37) (actual time=181.873..203.766 rows=50.00 loops=1)
+   Buffers: shared hit=3493
+   ->  Sort  (cost=5597.34..5597.34 rows=1 width=37) (actual time=181.869..203.758 rows=50.00 loops=1)
+         Sort Key: m.occurred_at DESC, m.movement_id DESC
+         Sort Method: top-N heapsort  Memory: 32kB
+         Buffers: shared hit=3493
+         ->  Nested Loop  (cost=1022.66..5597.33 rows=1 width=37) (actual time=2.343..203.319 rows=201.00 loops=1)
+               Join Filter: (l.product_id = p.product_id)
+               Buffers: shared hit=3487
+               ->  Index Scan using product_sku_key on product p  (cost=0.15..8.17 rows=1 width=8) (actual time=0.071..0.075 rows=1.00 loops=1)
+                     Index Cond: (sku = 'VX-017'::text)
+                     Index Searches: 1
+                     Buffers: shared hit=2
+               ->  Gather  (cost=1022.51..5586.62 rows=203 width=45) (actual time=2.263..203.102 rows=201.00 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=3485
+                     ->  Hash Join  (cost=22.51..4566.32 rows=85 width=45) (actual time=0.525..42.980 rows=67.00 loops=3)
+                           Hash Cond: (m.lot_id = l.lot_id)
+                           Buffers: shared hit=3485
+                           ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=45) (actual time=0.017..15.484 rows=67666.67 loops=3)
+                                 Buffers: shared hit=3475
+                           ->  Hash  (cost=22.50..22.50 rows=1 width=16) (actual time=0.334..0.334 rows=1.00 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=10
+                                 ->  Seq Scan on lot l  (cost=0.00..22.50 rows=1 width=16) (actual time=0.255..0.307 rows=1.00 loops=1)
+                                       Filter: (lot_code = 'LOT-000777'::text)
+                                       Rows Removed by Filter: 999
+                                       Buffers: shared hit=10
+ Planning:
+   Buffers: shared hit=185
+ Planning Time: 9.131 ms
+ Execution Time: 204.015 ms
+(33 rows)
+
+PLAN B: latest movements for CLINIC07
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5557.56..5563.38 rows=50 width=41) (actual time=179.020..188.398 rows=50.00 loops=1)
+   Buffers: shared hit=3507
+   ->  Gather Merge  (cost=5557.56..5596.35 rows=333 width=41) (actual time=179.019..188.390 rows=50.00 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3507
+         ->  Sort  (cost=4557.54..4557.89 rows=139 width=41) (actual time=37.269..37.279 rows=16.67 loops=3)
+               Sort Key: m.occurred_at DESC, m.movement_id DESC
+               Sort Method: top-N heapsort  Memory: 32kB
+               Buffers: shared hit=3507
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Hash Join  (cost=8.18..4552.59 rows=139 width=41) (actual time=0.035..30.437 rows=3767.00 loops=3)
+                     Hash Cond: (m.facility_id = f.facility_id)
+                     Buffers: shared hit=3477
+                     ->  Parallel Seq Scan on stock_movement m  (cost=0.00..4320.83 rows=84583 width=49) (actual time=0.006..10.308 rows=67666.67 loops=3)
+                           Buffers: shared hit=3475
+                     ->  Hash  (cost=8.17..8.17 rows=1 width=8) (actual time=0.056..0.057 rows=1.00 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                           Buffers: shared hit=2
+                           ->  Index Scan using facility_code_key on facility f  (cost=0.15..8.17 rows=1 width=8) (actual time=0.047..0.049 rows=1.00 loops=1)
+                                 Index Cond: (code = 'CLINIC07'::text)
+                                 Index Searches: 1
+                                 Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=43
+ Planning Time: 3.775 ms
+ Execution Time: 188.459 ms
+(28 rows)
+
