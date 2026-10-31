@@ -5,7 +5,7 @@
 
 VaxTrace NG is a fictional regional vaccine inventory and cold chain network. A depot supplies clinics, staff track sealed vaccine vials by lot and expiry date, and quality reviewers investigate temperature excursions. The system is a teaching case study; its records are synthetic and it is not used for clinical decisions.
 
-PostgreSQL stores operational stock, lot eligibility, transfers and their audit movements. MongoDB stores synthetic cold-chain telemetry and lot exposure windows. The implementation and evidence cover database design, query optimisation, transactions with concurrency control, and a NoSQL document model.
+PostgreSQL stores operational stock, lot eligibility, transfers and their audit movements. MongoDB stores synthetic cold-chain telemetry and lot exposure windows. A local PostgreSQL streaming standby demonstrates read-only replication and replica lag. The five portfolio activities use the same case study.
 
 ## What is implemented
 
@@ -13,6 +13,7 @@ PostgreSQL stores operational stock, lot eligibility, transfers and their audit 
 - [Portfolio 2](portfolio-2-query-optimisation/README.md): five business queries, saved results, repeated execution plans, two indexes and measured analysis.
 - [Portfolio 3](portfolio-3-transactions-concurrency/README.md): reserve, dispatch, receive, cancel, rollback, adversarial tests and two-session concurrency proof.
 - [Portfolio 4](portfolio-4-nosql/README.md): validated sensor documents, excursion and late-arrival queries, duplicate checks and cross-store lot-reference verification.
+- [Portfolio 5](portfolio-5-distributed-cloud/README.md): separate streaming standby, read-only checks, controlled lag and catch-up evidence.
 
 The seed creates 13 facilities, 20 fictional products, 1,000 lots, 3,000 stock balances and 203,000 movements. Each movement count and balance is checked after a clean build. Current stock quantities are sealed vials, never doses. Expired, quarantined and disposed lots remain visible in history but cannot be allocated or dispatched.
 
@@ -34,6 +35,8 @@ $cluster = Join-Path $env:TEMP 'vaxtrace_pgdata'
 Run `initdb` only if the chosen cluster directory does not already exist. The local test cluster used trust authentication while listening only on loopback. It is an isolated teaching setup, not a deployment configuration. If PostgreSQL is installed elsewhere, pass `-PsqlPath`, `-DbHost`, `-DbPort`, `-DbUser` and `-DbName` to the script. It requires `python` on `PATH` for the two-session test.
 
 For the measured optimisation comparison, start again from a clean schema and seed before creating the two movement indexes. The exact sequence and recorded results are in the Portfolio 2 README. The test server and its data files are local working assets and are not part of this repository.
+
+The Portfolio 4 README explains the isolated MongoDB setup and document checks. The Portfolio 5 README explains the base backup, standby, and replication checks. Both use synthetic data and keep their local database files out of the repository.
 
 ## Source material
 

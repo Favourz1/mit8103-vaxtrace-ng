@@ -1,0 +1,11 @@
+PRIMARY stock balance rows: 3000
+PASS base backup created with standby signal and primary connection settings
+PASS primary reports one streaming standby
+PASS standby is read-only and contains 3000 stock balances
+PASS standby rejected a write: read-only transaction
+PASS controlled lag: committed probe visible on primary, absent on paused standby
+PRIMARY LSN 0/250002F0
+STANDBY replay LSN while paused 0/25000060
+PASS standby caught up and returned the committed probe
+STANDBY replay LSN after resume 0/250002F0
+PASS replication verification
