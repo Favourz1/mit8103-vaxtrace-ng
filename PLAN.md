@@ -61,13 +61,15 @@ Case study: VaxTrace NG, a fictional regional vaccine inventory and cold chain n
 | Design quality and advanced concepts | Normalisation, data ownership, transactions, NoSQL and distributed trade-offs |
 | Documentation and individual understanding | README files, exact commands, measured results and student review |
 
+The marking rubric also assigns technical correctness (8), database design quality (6), practical implementation (8), query and performance analysis (5), advanced concepts (5), documentation and GitHub organisation (5), and technical reflection/individual understanding (3). The schema and integrity tests address correctness; the ER model and normalisation address design; runnable SQL and transaction evidence address implementation; saved plans address performance; transactions plus the later NoSQL and distributed work address advanced concepts; the repository and READMEs address organisation; and the later student-authored reflection addresses individual understanding. No criterion is treated as complete merely because its evidence is planned.
+
 ## Current boundary
 
 This work session ends after package 4.3, Portfolio 3. Packages 5-8 remain planned only. Do not describe them as implemented before they are built and verified.
 
 ## Progress after implementation review
 
-- Complete locally: 0.1, 1.1, 1.3, 2.1-2.3, 3.1-3.3, 4.1-4.3. Clean rebuild and adversarial evidence are saved.
-- Partial: 1.2 until assessor access is arranged. Browser control stopped during GitHub navigation, so the existing Git credential manager was used to verify the personal `Favourz1` account and create a private repository. Commits are genuine Conventional Commits under Favour Okoh. They are unsigned because the configured GPG prompt blocked unattended commits. Remote push verification is recorded separately.
+- Complete: 0.1-0.2, 1.1, 1.3, 2.1-2.3, 3.1-3.3, 4.1-4.3. Clean rebuild, adversarial and performance evidence are saved. Genuine Conventional Commits were pushed to the private remote in order. Remote `main` was verified at `01df089c49fd7a99032ec66892edebaa36302f36` before this status update, and the repository API confirmed `private=true` under `Favourz1`.
+- Partial: 1.2 until assessor access is arranged. Browser control stopped during GitHub navigation, so the existing Git credential manager was used to verify the personal account and create the repository. Commits are under Favour Okoh, have no co-author trailer, and are unsigned because the configured GPG prompt blocked unattended commits.
 - Open submission fact: the assessment plan and MIT calendar agree on 15 November 2026 at 11:59 PM, but neither states a time zone. Check the live LMS before hand-in. The assessor's private GitHub access method also remains open.
 - Future work: 5.1, 6.1, 7.1 and 8.1-8.2. The student alone handles the Google Form.
