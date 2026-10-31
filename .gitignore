@@ -1,0 +1,16 @@
+# Local database clusters and credentials
+.env
+.env.*
+!.env.example
+pgdata/
+mongo-data/
+*.key
+*.pem
+
+# Generated files
+__pycache__/
+*.pyc
+.pytest_cache/
+work/
+tmp/
+.DS_Store
