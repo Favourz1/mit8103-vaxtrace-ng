@@ -9,6 +9,11 @@ from pathlib import Path
 from pymongo import MongoClient
 
 
+def require_lot(authoritative: set[tuple[str, str]], sku: str, lot_code: str) -> None:
+    if (sku, lot_code) not in authoritative:
+        raise ValueError(f"unknown PostgreSQL lot reference: {sku}/{lot_code}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--psql", type=Path, default=Path(r"C:\Program Files\PostgreSQL\18\bin\psql.exe"))
@@ -30,9 +35,15 @@ def main() -> None:
     assert len(exposures) == 2
     for exposure in exposures:
         key = (exposure["product_sku"], exposure["lot_code"])
-        assert key in authoritative, f"unknown PostgreSQL lot reference: {key}"
+        require_lot(authoritative, *key)
         print("PASS exposure reference", *key)
     print("PASS both MongoDB exposure references match PostgreSQL lots")
+    try:
+        require_lot(authoritative, "VX-001", "LOT-NOT-IN-POSTGRES")
+    except ValueError:
+        print("PASS unknown PostgreSQL lot reference rejected by the cross-store check")
+    else:
+        raise AssertionError("unknown PostgreSQL lot reference was accepted")
 
 
 if __name__ == "__main__":
