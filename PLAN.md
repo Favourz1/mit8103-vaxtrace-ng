@@ -10,7 +10,7 @@ Case study: VaxTrace NG, a fictional regional vaccine inventory and cold chain n
 - Miva LMS CA page: Google Form submission; one attempt; similarity limit 20% excluding bibliography; submission folder `Okoh_Favour_301930463`; files inside it use `Okoh_Favour_301930463_DocumentType.ext`.
 - Live Google Form (read only inspection, 31 October 2026): student email, one ZIP upload, and a separate ReadME upload. Each upload has a 100 MB limit. The form's separate ReadME example omits the student ID. We will use `Okoh_Favour_README.txt` for that separate field and student ID in filenames inside the ZIP, unless the form changes or Miva clarifies otherwise. The form must be completed only by the student.
 - Miva first semester assessment plan and MIT calendar: Advanced Database Systems CA due 15 November 2026 at 11:59 PM. Neither local copy specifies a time zone; confirm if the live LMS presents one before hand-in.
-- Assessor GitHub identity or private repository access method remains to be confirmed before submission.
+- Private GitHub repository: https://github.com/Favourz1/mit8103-vaxtrace-ng (personal account, confirmed private). Assessor GitHub identity or approved private repository access method remains to be confirmed before submission.
 
 ## Business rules to implement and prove
 
@@ -68,6 +68,6 @@ This work session ends after package 4.3, Portfolio 3. Packages 5-8 remain plann
 ## Progress after implementation review
 
 - Complete locally: 0.1, 1.1, 1.3, 2.1-2.3, 3.1-3.3, 4.1-4.3. Clean rebuild and adversarial evidence are saved.
-- Partial: 0.2 and 1.2. The personal Chrome profile was identified, but browser control stopped during GitHub navigation. The GitHub repository has not been created or pushed. Local commits are genuine Conventional Commits under Favour Okoh. They are unsigned because the configured GPG prompt blocked unattended commits.
+- Partial: 1.2 until assessor access is arranged. Browser control stopped during GitHub navigation, so the existing Git credential manager was used to verify the personal `Favourz1` account and create a private repository. Commits are genuine Conventional Commits under Favour Okoh. They are unsigned because the configured GPG prompt blocked unattended commits. Remote push verification is recorded separately.
 - Open submission fact: the assessment plan and MIT calendar agree on 15 November 2026 at 11:59 PM, but neither states a time zone. Check the live LMS before hand-in. The assessor's private GitHub access method also remains open.
 - Future work: 5.1, 6.1, 7.1 and 8.1-8.2. The student alone handles the Google Form.

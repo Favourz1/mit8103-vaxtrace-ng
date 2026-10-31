@@ -36,7 +36,7 @@ For the measured optimisation comparison, start again from a clean schema and se
 
 ## Project status and hand-in
 
-The repository is local while GitHub access is being resolved. No GitHub URL or remote access is claimed yet. Portfolio 4, Portfolio 5, the 2-3 page final summary and the Google Form submission remain open. The student will complete the Google Form personally. The form requires a ZIP folder and a separate ReadME upload, each at most 100 MB.
+The [private GitHub repository](https://github.com/Favourz1/mit8103-vaxtrace-ng) holds the committed portfolio. Assessor access still needs to be arranged through the university's approved method before submission. Portfolio 4, Portfolio 5, the 2-3 page final summary and the Google Form submission remain open. The student will complete the Google Form personally. The form requires a ZIP folder and a separate ReadME upload, each at most 100 MB.
 
 AI assistance was used to draft and test the code and documentation for this working portfolio. Favour must independently review the outputs, understand the design and record what was checked in the final AI Use Declaration. This README does not claim that personal review has happened yet.
 
