@@ -1,0 +1,143 @@
+Pager usage is off.
+SET
+Q1: eligible lots for product VX-001 at the depot, as of 2026-10-31
+  lot_code  | expires_on | available_vials 
+------------+------------+-----------------
+ LOT-000001 | 2027-01-02 |             100
+ LOT-000301 | 2027-01-02 |             100
+ LOT-000601 | 2027-01-02 |             100
+ LOT-000901 | 2027-01-02 |             100
+ LOT-000021 | 2027-01-22 |             100
+ LOT-000321 | 2027-01-22 |             100
+ LOT-000621 | 2027-01-22 |             100
+ LOT-000921 | 2027-01-22 |             100
+ LOT-000041 | 2027-02-11 |             100
+ LOT-000341 | 2027-02-11 |             100
+(10 rows)
+
+Q2: available stock by clinic for product VX-001
+  clinic  | available_vials 
+----------+-----------------
+ CLINIC01 |             375
+ CLINIC02 |             400
+ CLINIC05 |             375
+ CLINIC06 |             375
+ CLINIC09 |             400
+ CLINIC10 |             375
+(6 rows)
+
+Q3: latest 50 movements for a named lot
+ movement_id |   movement_kind    | on_hand_delta |      occurred_at       
+-------------+--------------------+---------------+------------------------
+      199662 | historical_issue   |            -1 | 2026-03-07 03:25:31+01
+      199661 | historical_receipt |             1 | 2026-03-07 03:25:30+01
+      199660 | historical_issue   |            -1 | 2026-03-07 03:25:01+01
+      199659 | historical_receipt |             1 | 2026-03-07 03:25:00+01
+      199658 | historical_issue   |            -1 | 2026-03-07 03:24:31+01
+      199657 | historical_receipt |             1 | 2026-03-07 03:24:30+01
+      193662 | historical_issue   |            -1 | 2026-03-06 02:25:31+01
+      193661 | historical_receipt |             1 | 2026-03-06 02:25:30+01
+      193660 | historical_issue   |            -1 | 2026-03-06 02:25:01+01
+      193659 | historical_receipt |             1 | 2026-03-06 02:25:00+01
+      193658 | historical_issue   |            -1 | 2026-03-06 02:24:31+01
+      193657 | historical_receipt |             1 | 2026-03-06 02:24:30+01
+      187662 | historical_issue   |            -1 | 2026-03-05 01:25:31+01
+      187661 | historical_receipt |             1 | 2026-03-05 01:25:30+01
+      187660 | historical_issue   |            -1 | 2026-03-05 01:25:01+01
+      187659 | historical_receipt |             1 | 2026-03-05 01:25:00+01
+      187658 | historical_issue   |            -1 | 2026-03-05 01:24:31+01
+      187657 | historical_receipt |             1 | 2026-03-05 01:24:30+01
+      181662 | historical_issue   |            -1 | 2026-03-04 00:25:31+01
+      181661 | historical_receipt |             1 | 2026-03-04 00:25:30+01
+      181660 | historical_issue   |            -1 | 2026-03-04 00:25:01+01
+      181659 | historical_receipt |             1 | 2026-03-04 00:25:00+01
+      181658 | historical_issue   |            -1 | 2026-03-04 00:24:31+01
+      181657 | historical_receipt |             1 | 2026-03-04 00:24:30+01
+      175662 | historical_issue   |            -1 | 2026-03-02 23:25:31+01
+      175661 | historical_receipt |             1 | 2026-03-02 23:25:30+01
+      175660 | historical_issue   |            -1 | 2026-03-02 23:25:01+01
+      175659 | historical_receipt |             1 | 2026-03-02 23:25:00+01
+      175658 | historical_issue   |            -1 | 2026-03-02 23:24:31+01
+      175657 | historical_receipt |             1 | 2026-03-02 23:24:30+01
+      169662 | historical_issue   |            -1 | 2026-03-01 22:25:31+01
+      169661 | historical_receipt |             1 | 2026-03-01 22:25:30+01
+      169660 | historical_issue   |            -1 | 2026-03-01 22:25:01+01
+      169659 | historical_receipt |             1 | 2026-03-01 22:25:00+01
+      169658 | historical_issue   |            -1 | 2026-03-01 22:24:31+01
+      169657 | historical_receipt |             1 | 2026-03-01 22:24:30+01
+      163662 | historical_issue   |            -1 | 2026-02-28 21:25:31+01
+      163661 | historical_receipt |             1 | 2026-02-28 21:25:30+01
+      163660 | historical_issue   |            -1 | 2026-02-28 21:25:01+01
+      163659 | historical_receipt |             1 | 2026-02-28 21:25:00+01
+      163658 | historical_issue   |            -1 | 2026-02-28 21:24:31+01
+      163657 | historical_receipt |             1 | 2026-02-28 21:24:30+01
+      157662 | historical_issue   |            -1 | 2026-02-27 20:25:31+01
+      157661 | historical_receipt |             1 | 2026-02-27 20:25:30+01
+      157660 | historical_issue   |            -1 | 2026-02-27 20:25:01+01
+      157659 | historical_receipt |             1 | 2026-02-27 20:25:00+01
+      157658 | historical_issue   |            -1 | 2026-02-27 20:24:31+01
+      157657 | historical_receipt |             1 | 2026-02-27 20:24:30+01
+      151662 | historical_issue   |            -1 | 2026-02-26 19:25:31+01
+      151661 | historical_receipt |             1 | 2026-02-26 19:25:30+01
+(50 rows)
+
+Q4: latest 50 movements at a named clinic
+ movement_id | lot_id |   movement_kind    |      occurred_at       
+-------------+--------+--------------------+------------------------
+      202984 |    331 | historical_issue   | 2026-03-07 17:16:01+01
+      202983 |    331 | historical_receipt | 2026-03-07 17:16:00+01
+      202956 |    326 | historical_issue   | 2026-03-07 17:09:01+01
+      202955 |    326 | historical_receipt | 2026-03-07 17:09:00+01
+      202912 |    319 | historical_issue   | 2026-03-07 16:58:01+01
+      202911 |    319 | historical_receipt | 2026-03-07 16:58:00+01
+      202884 |    314 | historical_issue   | 2026-03-07 16:51:01+01
+      202883 |    314 | historical_receipt | 2026-03-07 16:51:00+01
+      202840 |    307 | historical_issue   | 2026-03-07 16:40:01+01
+      202839 |    307 | historical_receipt | 2026-03-07 16:40:00+01
+      202812 |    302 | historical_issue   | 2026-03-07 16:33:01+01
+      202811 |    302 | historical_receipt | 2026-03-07 16:33:00+01
+      202768 |    295 | historical_issue   | 2026-03-07 16:22:01+01
+      202767 |    295 | historical_receipt | 2026-03-07 16:22:00+01
+      202740 |    290 | historical_issue   | 2026-03-07 16:15:01+01
+      202739 |    290 | historical_receipt | 2026-03-07 16:15:00+01
+      202696 |    283 | historical_issue   | 2026-03-07 16:04:01+01
+      202695 |    283 | historical_receipt | 2026-03-07 16:04:00+01
+      202668 |    278 | historical_issue   | 2026-03-07 15:57:01+01
+      202667 |    278 | historical_receipt | 2026-03-07 15:57:00+01
+      202624 |    271 | historical_issue   | 2026-03-07 15:46:01+01
+      202623 |    271 | historical_receipt | 2026-03-07 15:46:00+01
+      202596 |    266 | historical_issue   | 2026-03-07 15:39:01+01
+      202595 |    266 | historical_receipt | 2026-03-07 15:39:00+01
+      202552 |    259 | historical_issue   | 2026-03-07 15:28:01+01
+      202551 |    259 | historical_receipt | 2026-03-07 15:28:00+01
+      202524 |    254 | historical_issue   | 2026-03-07 15:21:01+01
+      202523 |    254 | historical_receipt | 2026-03-07 15:21:00+01
+      202480 |    247 | historical_issue   | 2026-03-07 15:10:01+01
+      202479 |    247 | historical_receipt | 2026-03-07 15:10:00+01
+      202452 |    242 | historical_issue   | 2026-03-07 15:03:01+01
+      202451 |    242 | historical_receipt | 2026-03-07 15:03:00+01
+      202408 |    235 | historical_issue   | 2026-03-07 14:52:01+01
+      202407 |    235 | historical_receipt | 2026-03-07 14:52:00+01
+      202380 |    230 | historical_issue   | 2026-03-07 14:45:01+01
+      202379 |    230 | historical_receipt | 2026-03-07 14:45:00+01
+      202336 |    223 | historical_issue   | 2026-03-07 14:34:01+01
+      202335 |    223 | historical_receipt | 2026-03-07 14:34:00+01
+      202308 |    218 | historical_issue   | 2026-03-07 14:27:01+01
+      202307 |    218 | historical_receipt | 2026-03-07 14:27:00+01
+      202264 |    211 | historical_issue   | 2026-03-07 14:16:01+01
+      202263 |    211 | historical_receipt | 2026-03-07 14:16:00+01
+      202236 |    206 | historical_issue   | 2026-03-07 14:09:01+01
+      202235 |    206 | historical_receipt | 2026-03-07 14:09:00+01
+      202192 |    199 | historical_issue   | 2026-03-07 13:58:01+01
+      202191 |    199 | historical_receipt | 2026-03-07 13:58:00+01
+      202164 |    194 | historical_issue   | 2026-03-07 13:51:01+01
+      202163 |    194 | historical_receipt | 2026-03-07 13:51:00+01
+      202120 |    187 | historical_issue   | 2026-03-07 13:40:01+01
+      202119 |    187 | historical_receipt | 2026-03-07 13:40:00+01
+(50 rows)
+
+Q5: transfer state counts
+ transfer_status | transfer_count 
+-----------------+----------------
+(0 rows)
+
