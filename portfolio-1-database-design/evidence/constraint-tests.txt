@@ -1,0 +1,3 @@
+SET
+psql:portfolio-1-database-design/04_constraint_tests.sql:56: NOTICE:  PASS: six duplicate, reference, quantity, status and audit tests
+DO
