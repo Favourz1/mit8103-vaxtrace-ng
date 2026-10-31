@@ -38,6 +38,8 @@ For the measured optimisation comparison, start again from a clean schema and se
 
 The Portfolio 4 README explains the isolated MongoDB setup and document checks. The Portfolio 5 README explains the base backup, standby, and replication checks. Both use synthetic data and keep their local database files out of the repository.
 
+The [portfolio summary](Okoh_Favour_301930463_Portfolio_Summary.docx) brings together the five activities, evidence, reflection and references. The [submission ReadME](Okoh_Favour_301930463_README.txt) provides a short map of the files.
+
 ## Source material
 
 - Miva Open University, *MIT 8103 Advanced Database Systems: First Semester Continuous Assessment*, September cohort 2026.

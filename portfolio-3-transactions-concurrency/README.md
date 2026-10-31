@@ -26,6 +26,7 @@ The demo commits a 10-vial transfer of `VX-001 / LOT-000001` from depot to clini
 - `evidence/clean-rebuild.txt`: repeat rebuild of the disposable test database and all functional tests.
 - `evidence/fresh-database-rebuild.txt`: the same suite on a newly created independent database.
 - `evidence/final-integrity.txt`: post-concurrency balance, ledger and state checks.
+- `evidence/final-clean-rebuild.txt`: final repeat of the complete PostgreSQL functional suite.
 
 These are local demonstrations, not a production service. A production implementation would need controlled application roles, monitoring, operational backups, and a defined workflow for physical receipt disputes and temperature review. The demonstration does not claim those features.
 

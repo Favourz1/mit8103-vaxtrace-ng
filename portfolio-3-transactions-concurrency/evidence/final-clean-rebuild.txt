@@ -1,0 +1,167 @@
+RUN portfolio-1-database-design/01_schema.sql
+psql:portfolio-1-database-design/01_schema.sql:3: NOTICE:  drop cascades to 13 other objects
+DETAIL:  drop cascades to table facility
+drop cascades to table product
+drop cascades to table lot
+drop cascades to table stock_balance
+drop cascades to table transfer
+drop cascades to table transfer_line
+drop cascades to table stock_movement
+drop cascades to function reject_movement_mutation()
+drop cascades to function request_transfer(text,text,text,text,integer,text)
+drop cascades to function dispatch_transfer(bigint)
+drop cascades to function receive_transfer(bigint)
+drop cascades to function cancel_transfer(bigint)
+drop cascades to table replication_probe
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+RUN portfolio-1-database-design/02_seed.sql
+BEGIN
+SET
+INSERT 0 1
+INSERT 0 12
+INSERT 0 20
+INSERT 0 1000
+INSERT 0 3000
+INSERT 0 3000
+INSERT 0 200000
+COMMIT
+RUN portfolio-1-database-design/03_verify.sql
+SET
+     entity     | actual 
+----------------+--------
+ facility       |     13
+ product        |     20
+ lot            |   1000
+ stock_balance  |   3000
+ stock_movement | 203000
+(5 rows)
+
+DO
+psql:portfolio-1-database-design/03_verify.sql:23: NOTICE:  PASS: expected seed counts
+ facility_id | lot_id | on_hand_vials | reserved_vials | on_hand_total | reserved_total 
+-------------+--------+---------------+----------------+---------------+----------------
+(0 rows)
+
+ facility_id | lot_id 
+-------------+--------
+(0 rows)
+
+DO
+psql:portfolio-1-database-design/03_verify.sql:64: NOTICE:  PASS: stock balances reconcile with movements
+RUN portfolio-1-database-design/04_constraint_tests.sql
+SET
+psql:portfolio-1-database-design/04_constraint_tests.sql:56: NOTICE:  PASS: six duplicate, reference, quantity, status and audit tests
+DO
+RUN portfolio-2-query-optimisation/03_indexes.sql
+SET
+CREATE INDEX
+CREATE INDEX
+ANALYZE
+RUN portfolio-3-transactions-concurrency/01_transfer_functions.sql
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+RUN portfolio-3-transactions-concurrency/02_transaction_demo.sql
+Pager usage is off.
+SET
+BEFORE: depot and CLINIC01 balances for LOT-000001
+   code   | on_hand_vials | reserved_vials 
+----------+---------------+----------------
+ CLINIC01 |            25 |              0
+ DEPOT    |           100 |              0
+(2 rows)
+
+COMMIT 1: reserve 10 vials atomically
+BEGIN
+COMMIT
+ transfer_id |       request_key       | transfer_status 
+-------------+-------------------------+-----------------
+           1 | demo-committed-transfer | reserved
+(1 row)
+
+COMMIT 2: dispatch; source on-hand and reservation fall together
+BEGIN
+ dispatch_transfer 
+-------------------
+ 
+(1 row)
+
+COMMIT
+COMMIT 3: receive; destination on-hand rises
+BEGIN
+ receive_transfer 
+------------------
+ 
+(1 row)
+
+COMMIT
+AFTER: transfer and stock movement evidence
+ transfer_id | transfer_status | was_dispatched | was_received 
+-------------+-----------------+----------------+--------------
+           1 | received        | t              | t
+(1 row)
+
+   code   | on_hand_vials | reserved_vials 
+----------+---------------+----------------
+ CLINIC01 |            35 |              0
+ DEPOT    |            90 |              0
+(2 rows)
+
+ movement_kind | on_hand_delta | reserved_delta 
+---------------+---------------+----------------
+ reservation   |             0 |             10
+ dispatch      |           -10 |            -10
+ receipt       |            10 |              0
+(3 rows)
+
+ROLLBACK: a reservation is explicitly undone
+BEGIN
+ request_transfer 
+------------------
+                2
+(1 row)
+
+ROLLBACK
+ rolled_back_transfers 
+-----------------------
+                     0
+(1 row)
+
+DO
+psql:portfolio-3-transactions-concurrency/02_transaction_demo.sql:74: NOTICE:  PASS: commit, rollback, receipt and ledger reconciliation
+RUN portfolio-3-transactions-concurrency/03_adversarial_tests.sql
+SET
+BEGIN
+psql:portfolio-3-transactions-concurrency/03_adversarial_tests.sql:109: NOTICE:  PASS: nine transfer validation, state and atomicity cases
+DO
+ROLLBACK
+RUN portfolio-3-transactions-concurrency/04_concurrency_test.py
+Before race, depot lot 41: 100|0
+race-a: exit=0; stdout='BEGIN\n4\n\nCOMMIT'; stderr=''
+race-b: exit=1; stdout='BEGIN'; stderr='ERROR:  insufficient available stock\nCONTEXT:  PL/pgSQL function request_transfer(text,text,text,text,integer,text) line 45 at RAISE'
+After race, depot lot 41: 100|70; committed transfers: 1
+After cancellation, depot lot 41: 100|0
+PASS: concurrent sessions cannot reserve 140 vials from 100
+RUN portfolio-3-transactions-concurrency/05_final_integrity.sql
+SET
+ transfers | received | cancelled 
+-----------+----------+-----------
+         2 |        1 |         1
+(1 row)
+
+psql:portfolio-3-transactions-concurrency/05_final_integrity.sql:40: NOTICE:  PASS: final balances, ledger, transfer states and race cleanup
+DO
+PASS: clean rebuild and functional verification
