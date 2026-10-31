@@ -37,4 +37,7 @@ $env:PYTHONIOENCODING = 'utf-8'
 & python (Join-Path $repoRoot 'portfolio-3-transactions-concurrency/04_concurrency_test.py') `
     --psql $PsqlPath --host $DbHost --port $DbPort --database $DbName --user $DbUser 2>&1
 if ($LASTEXITCODE -ne 0) { throw 'Concurrency test failed' }
+Write-Output 'RUN portfolio-3-transactions-concurrency/05_final_integrity.sql'
+& $PsqlPath @psqlArgs '-f' (Join-Path $repoRoot 'portfolio-3-transactions-concurrency/05_final_integrity.sql') 2>&1
+if ($LASTEXITCODE -ne 0) { throw 'Final integrity test failed' }
 Write-Output 'PASS: clean rebuild and functional verification'

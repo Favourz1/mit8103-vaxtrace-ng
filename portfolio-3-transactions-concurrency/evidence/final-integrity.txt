@@ -1,0 +1,8 @@
+SET
+ transfers | received | cancelled 
+-----------+----------+-----------
+         2 |        1 |         1
+(1 row)
+
+DO
+psql:portfolio-3-transactions-concurrency/05_final_integrity.sql:40: NOTICE:  PASS: final balances, ledger, transfer states and race cleanup

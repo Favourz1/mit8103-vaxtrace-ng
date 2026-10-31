@@ -1,0 +1,2 @@
+# Keep captured psql table formatting as produced by the client.
+**/evidence/*.txt -whitespace
