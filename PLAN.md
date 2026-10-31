@@ -64,3 +64,10 @@ Case study: VaxTrace NG, a fictional regional vaccine inventory and cold chain n
 ## Current boundary
 
 This work session ends after package 4.3, Portfolio 3. Packages 5-8 remain planned only. Do not describe them as implemented before they are built and verified.
+
+## Progress after implementation review
+
+- Complete locally: 0.1, 1.1, 1.3, 2.1-2.3, 3.1-3.3, 4.1-4.3. Clean rebuild and adversarial evidence are saved.
+- Partial: 0.2 and 1.2. The personal Chrome profile was identified, but browser control stopped during GitHub navigation. The GitHub repository has not been created or pushed. Local commits are genuine Conventional Commits under Favour Okoh. They are unsigned because the configured GPG prompt blocked unattended commits.
+- Open submission fact: the assessment plan specifies 15 November 2026 at 11:59 PM, but does not state a time zone. Check the LMS calendar before hand-in. The assessor's private GitHub access method also remains open.
+- Future work: 5.1, 6.1, 7.1 and 8.1-8.2. The student alone handles the Google Form.

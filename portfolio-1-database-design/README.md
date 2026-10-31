@@ -42,3 +42,5 @@ The database allows an empty transfer header during a transaction; the `request_
 ## Rebuild
 
 Run `01_schema.sql` against an empty or disposable PostgreSQL 18 database. It drops and recreates only the `vaxtrace` schema. Run `02_seed.sql`, `03_verify.sql` and `04_constraint_tests.sql` in order. The root `scripts/rebuild_and_verify.ps1` runs the complete sequence and saves clean-build evidence.
+
+References: Miva Open University, *Advanced Database Systems*, Study Session One, section 1.1.7 on normalisation; PostgreSQL, [Data Definition](https://www.postgresql.org/docs/18/ddl.html); WHO, [vaccine supply and logistics](https://immunizationdata.who.int/global/wiise-detail-page/vaccine-supply-and-logistics).

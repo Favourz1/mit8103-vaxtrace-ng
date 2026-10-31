@@ -29,3 +29,4 @@ The movement table occupied about 27 MB. Each new index occupied about 8 MB in t
 - `evidence/query-results-before.txt` and `query-results-after.txt`: unchanged outputs.
 - PostgreSQL, [Using EXPLAIN](https://www.postgresql.org/docs/18/using-explain.html).
 - PostgreSQL, [Multicolumn Indexes](https://www.postgresql.org/docs/18/indexes-multicolumn.html).
+- Miva Open University, *Advanced Database Systems*, Study Session Four, sections 4.1.2 and 4.1.3 on query optimisation and execution plans.
