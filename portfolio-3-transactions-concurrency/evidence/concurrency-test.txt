@@ -1,0 +1,6 @@
+Before race, depot lot 41: 100|0
+race-a: exit=1; stdout='BEGIN'; stderr='ERROR:  insufficient available stock\nCONTEXT:  PL/pgSQL function request_transfer(text,text,text,text,integer,text) line 45 at RAISE'
+race-b: exit=0; stdout='BEGIN\n4\n\nCOMMIT'; stderr=''
+After race, depot lot 41: 100|70; committed transfers: 1
+After cancellation, depot lot 41: 100|0
+PASS: concurrent sessions cannot reserve 140 vials from 100

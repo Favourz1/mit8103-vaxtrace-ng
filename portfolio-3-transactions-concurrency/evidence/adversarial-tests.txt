@@ -1,0 +1,5 @@
+SET
+BEGIN
+psql:portfolio-3-transactions-concurrency/03_adversarial_tests.sql:109: NOTICE:  PASS: nine transfer validation, state and atomicity cases
+DO
+ROLLBACK
