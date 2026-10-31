@@ -11,7 +11,7 @@ erDiagram
     LOT ||--o{ STOCK_BALANCE : counted_at
     FACILITY ||--o{ TRANSFER : sends
     FACILITY ||--o{ TRANSFER : receives
-    TRANSFER ||--|{ TRANSFER_LINE : contains
+    TRANSFER ||--o{ TRANSFER_LINE : contains
     LOT ||--o{ TRANSFER_LINE : moved_on
     FACILITY ||--o{ STOCK_MOVEMENT : records
     LOT ||--o{ STOCK_MOVEMENT : concerns
@@ -19,6 +19,18 @@ erDiagram
 ```
 
 The transfer header holds the source, destination, state and times. Transfer lines hold the lots and quantities. This avoids repeating header data when a transfer has several lines. Product attributes stay in `product`, lot attributes stay in `lot`, and facility attributes stay in `facility`. The balance key `(facility_id, lot_id)` determines both quantity columns. These dependencies keep the operational tables in third normal form. The balance is a deliberate materialisation of the movement ledger for fast allocation; reconciliation checks compare it with movement sums.
+
+| Relation | Key and main references | Purpose |
+| --- | --- | --- |
+| `facility` | `facility_id` PK, `code` unique | Depot or clinic identity |
+| `product` | `product_id` PK, `sku` unique | Product name, vial size and permitted storage range |
+| `lot` | `lot_id` PK, `product_id` FK, `(product_id, lot_code)` unique | Batch identity, expiry and quality status |
+| `stock_balance` | `(facility_id, lot_id)` PK and FKs | Current on-hand and reserved vials |
+| `transfer` | `transfer_id` PK, `request_key` unique, two facility FKs | Shipment intent and state |
+| `transfer_line` | `(transfer_id, lot_id)` PK and FKs | One lot and quantity within a transfer |
+| `stock_movement` | `movement_id` PK; facility, lot and optional transfer FKs | Append-only changes to stock or reservation |
+
+The database allows an empty transfer header during a transaction; the `request_transfer` function inserts its first line in the same atomic statement. Application operations use the functions. The database owner retains direct table access for setup and maintenance.
 
 ## Constraints and boundaries
 
@@ -29,4 +41,4 @@ The transfer header holds the source, destination, state and times. Transfer lin
 
 ## Rebuild
 
-Run `01_schema.sql` against an empty or disposable PostgreSQL 18 database. It drops and recreates only the `vaxtrace` schema. Follow with the seed and verification scripts documented in the root README when those increments are complete.
+Run `01_schema.sql` against an empty or disposable PostgreSQL 18 database. It drops and recreates only the `vaxtrace` schema. Run `02_seed.sql`, `03_verify.sql` and `04_constraint_tests.sql` in order. The root `scripts/rebuild_and_verify.ps1` runs the complete sequence and saves clean-build evidence.

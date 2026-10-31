@@ -50,7 +50,8 @@ INSERT INTO stock_movement
     (facility_id, lot_id, movement_kind, on_hand_delta, reserved_delta, occurred_at, note)
 SELECT facility_id, lot_id, 'opening_receipt', on_hand_vials, 0,
        TIMESTAMPTZ '2026-01-01 00:00:00+01', 'Synthetic opening stock'
-FROM stock_balance;
+FROM stock_balance
+ORDER BY facility_id, lot_id;
 
 -- Historical receipt/issue pairs net to zero and preserve the current balance.
 -- They provide a realistic-sized append-only audit workload for query analysis.
@@ -76,6 +77,7 @@ JOIN facility AS f ON f.code = p.facility_code
 CROSS JOIN LATERAL (VALUES
     ('historical_receipt', 1, INTERVAL '0 seconds'),
     ('historical_issue', -1, INTERVAL '1 second')
-) AS v(kind, delta, offset_time);
+) AS v(kind, delta, offset_time)
+ORDER BY p.n, v.offset_time;
 
 COMMIT;
