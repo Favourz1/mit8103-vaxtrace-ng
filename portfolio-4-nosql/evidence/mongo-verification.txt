@@ -1,0 +1,20 @@
+MongoDB 9.0.4
+COUNTS {"equipment": 3, "lot_exposures": 2, "sensor_readings": 288}
+LOT EXPOSURE VX-001 LOT-000001 readings 48 excursions 2
+EXCURSION DEPOT-COLD-01-026 2026-10-31T06:30:00+00:00 2026-10-31T11:00:00+00:00 8.8
+EXCURSION DEPOT-COLD-01-028 2026-10-31T07:00:00+00:00 2026-10-31T07:02:00+00:00 9.2
+PASS delayed arrival: matched by observation time, received 4h30m later
+PASS late-arrival query: one reading exceeded one hour
+PASS control lot: 96 readings, no excursion
+QUERY PLAN {"isCached": false, "stage": "FETCH", "nss": "vaxtrace_portfolio.sensor_readings", "inputStage": {"stage": "IXSCAN", "nss": "vaxtrace_portfolio.sensor_readings", "keyPattern": {"equipment_id": 1, "observed_at": 1}, "indexName": "equipment_observed_unique", "isMultiKey": false, "multiKeyPaths": {"equipment_id": [], "observed_at": []}, "isUnique": true, "isSparse": false, "isPartial": false, "indexVersion": 2, "direction": "forward", "indexBounds": {"equipment_id": ["[\"DEPOT-COLD-01\", \"DEPOT-COLD-01\"]"], "observed_at": ["[new Date(1793404800000), new Date(1793448000000))"]}}}
+PASS duplicate reading id: rejected
+PASS duplicate equipment and observation: rejected
+PASS invalid temperature: rejected
+PASS missing temperature: rejected
+PASS unknown equipment: rejected
+PASS receipt before observation: rejected
+PASS unknown exposure equipment: rejected
+PASS reversed exposure window: rejected
+PASS final document count unchanged after rejected writes
+PASS no stock mutation: MongoDB collections contain telemetry and exposure references only
+PASS document model verification

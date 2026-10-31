@@ -1,0 +1,3 @@
+PASS exposure reference VX-001 LOT-000001
+PASS exposure reference VX-002 LOT-000002
+PASS both MongoDB exposure references match PostgreSQL lots

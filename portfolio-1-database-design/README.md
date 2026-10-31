@@ -37,7 +37,6 @@ The database allows an empty transfer header during a transaction; the `request_
 - Primary and foreign keys reject missing references. Unique codes and request keys reject duplicate business identities.
 - Checks enforce positive line quantities, nonnegative balances, `reserved <= on_hand`, distinct transfer endpoints, ordered timestamps and valid states.
 - A lot's `quality_status` is explicit. A quarantined or disposed lot needs a quality note. Time-dependent eligibility, including expiry, is checked inside allocation functions because a static check constraint cannot depend on today's date.
-- The database schema is the operational core for portfolios 1-3. Equipment, sensor readings and review workflow are planned for portfolio 4 and are not claimed as implemented here.
 
 ## Rebuild
 

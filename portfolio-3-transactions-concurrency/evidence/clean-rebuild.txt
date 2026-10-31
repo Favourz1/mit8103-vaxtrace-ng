@@ -1,5 +1,5 @@
 RUN portfolio-1-database-design/01_schema.sql
-psql:C:/Users/USER/Documents/Codex/2026-10-31/i-x20/outputs/Okoh_Favour_301930463/portfolio-1-database-design/01_schema.sql:3: NOTICE:  drop cascades to 12 other objects
+psql:portfolio-1-database-design/01_schema.sql:3: NOTICE:  drop cascades to 12 other objects
 DETAIL:  drop cascades to table facility
 drop cascades to table product
 drop cascades to table lot
@@ -46,7 +46,7 @@ SET
  stock_movement | 203000
 (5 rows)
 
-psql:C:/Users/USER/Documents/Codex/2026-10-31/i-x20/outputs/Okoh_Favour_301930463/portfolio-1-database-design/03_verify.sql:23: NOTICE:  PASS: expected seed counts
+psql:portfolio-1-database-design/03_verify.sql:23: NOTICE:  PASS: expected seed counts
 DO
  facility_id | lot_id | on_hand_vials | reserved_vials | on_hand_total | reserved_total 
 -------------+--------+---------------+----------------+---------------+----------------
@@ -56,11 +56,11 @@ DO
 -------------+--------
 (0 rows)
 
-psql:C:/Users/USER/Documents/Codex/2026-10-31/i-x20/outputs/Okoh_Favour_301930463/portfolio-1-database-design/03_verify.sql:64: NOTICE:  PASS: stock balances reconcile with movements
+psql:portfolio-1-database-design/03_verify.sql:64: NOTICE:  PASS: stock balances reconcile with movements
 DO
 RUN portfolio-1-database-design/04_constraint_tests.sql
 SET
-psql:C:/Users/USER/Documents/Codex/2026-10-31/i-x20/outputs/Okoh_Favour_301930463/portfolio-1-database-design/04_constraint_tests.sql:56: NOTICE:  PASS: six duplicate, reference, quantity, status and audit tests
+psql:portfolio-1-database-design/04_constraint_tests.sql:56: NOTICE:  PASS: six duplicate, reference, quantity, status and audit tests
 DO
 RUN portfolio-2-query-optimisation/03_indexes.sql
 SET
@@ -139,12 +139,12 @@ ROLLBACK
                      0
 (1 row)
 
-psql:C:/Users/USER/Documents/Codex/2026-10-31/i-x20/outputs/Okoh_Favour_301930463/portfolio-3-transactions-concurrency/02_transaction_demo.sql:74: NOTICE:  PASS: commit, rollback, receipt and ledger reconciliation
+psql:portfolio-3-transactions-concurrency/02_transaction_demo.sql:74: NOTICE:  PASS: commit, rollback, receipt and ledger reconciliation
 DO
 RUN portfolio-3-transactions-concurrency/03_adversarial_tests.sql
 SET
 BEGIN
-psql:C:/Users/USER/Documents/Codex/2026-10-31/i-x20/outputs/Okoh_Favour_301930463/portfolio-3-transactions-concurrency/03_adversarial_tests.sql:109: NOTICE:  PASS: nine transfer validation, state and atomicity cases
+psql:portfolio-3-transactions-concurrency/03_adversarial_tests.sql:109: NOTICE:  PASS: nine transfer validation, state and atomicity cases
 DO
 ROLLBACK
 RUN portfolio-3-transactions-concurrency/04_concurrency_test.py
@@ -162,5 +162,5 @@ SET
 (1 row)
 
 DO
-psql:C:/Users/USER/Documents/Codex/2026-10-31/i-x20/outputs/Okoh_Favour_301930463/portfolio-3-transactions-concurrency/05_final_integrity.sql:40: NOTICE:  PASS: final balances, ledger, transfer states and race cleanup
+psql:portfolio-3-transactions-concurrency/05_final_integrity.sql:40: NOTICE:  PASS: final balances, ledger, transfer states and race cleanup
 PASS: clean rebuild and functional verification
